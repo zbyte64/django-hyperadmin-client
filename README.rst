@@ -2,13 +2,7 @@
 Introduction
 ============
 
-django-hyperadmin-emberclient is a hyper admin client powered by emberjs.
-
---------
-Features
---------
-Defines it's own media type: application/vnd.Collection.hyperadmin.emberclient+JSON
-
+django-hyperadmin-client is a template based client for hyperadmin
 
 ------------
 Requirements
@@ -23,9 +17,9 @@ Requirements
 Installation
 ============
 
-Put 'emberclient' into your ``INSTALLED_APPS`` section of your settings file.
+Put 'hyperadminclient' into your ``INSTALLED_APPS`` section of your settings file.
 
 Add to your root url patterns::
 
-    url(r'^emberjs-admin/', include('emberclient.urls')),
+    url(r'^hyper-admin/', include('hyperadminclient.urls')),
 
