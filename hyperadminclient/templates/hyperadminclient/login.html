@@ -1,0 +1,83 @@
+{% extends "hyperadminclient/base.html" %}
+
+{% block content %}
+<div class="hypermediaresource">
+{% block embedded_links %}
+{% with state.get_embedded_links as embedded_links %}
+{% if embedded_links %}
+<h2>Embedded Links</h2>
+<div id="embedded_links">
+{% include "hyperadminclient/includes/links.html" with links=embedded_links %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block outbound_links %}
+{% with state.get_outbound_links as outbound_links %}
+{% if outbound_links %}
+<h2>Breadcrumbs</h2>
+<div id="outbound_links">
+{% include "hyperadminclient/includes/links.html" with links=outbound_links %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block templated_queries %}
+{% with state.get_templated_queries as templated_queries %}
+{% if templated_queries %}
+<h2>Templated Queries</h2>
+<div id=templated_queries">
+{% include "hyperadminclient/includes/templated_queries.html" with links=templated_queries %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block non_idempotent_updates %}
+{% with state.get_ln_links as non_idempotent_updates %}
+{% if non_idempotent_updates %}
+<div id="non_idempotent_updates">
+{% include "hyperadminclient/includes/links.html" with links=non_idempotent_updates %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block idempotent_updates %}
+{% with state.get_idempotent_links as idempotent_updates %}
+{% if idempotent_updates %}
+<div id="idempotent_updates">
+{% include "hyperadminclient/includes/links.html" with links=idempotent_updates %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+</div>
+
+{% with state.get_resource_items as items %}
+{% for item in items %}
+<div class="hypermediaitem item">
+
+{% block item_outbound_links %}
+{% if item.outbound_links %}
+<div class="outbound_links">
+{% include "hyperadminclient/includes/links.html" with links=item.outbound_links %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block item_embedded_links %}
+{% if item.embedded_links %}
+<div class="embedded_links">
+{% include "hyperadminclient/includes/links.html" with links=item.embedded_links %}
+</div>
+{% endif %}
+{% endblock %}
+
+</div>
+{% endfor %}
+{% endwith %}
+{% endblock content %}
+

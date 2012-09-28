@@ -1,0 +1,95 @@
+{% extends "hyperadminclient/base.html" %}{% load hyperadmin_utils %}
+
+{% block content %}
+<div class="hypermediaresource">
+{% block embedded_links %}
+{% with state.get_embedded_links as embedded_links %}
+{% if embedded_links %}
+<h2>Embedded Links</h2>
+<div id="embedded_links">
+{% include "hyperadminclient/includes/links.html" with links=embedded_links %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block outbound_links %}
+{% with state.get_outbound_links as outbound_links %}
+{% if outbound_links %}
+<h2>Outbound Links</h2>
+<div id="outbound_links">
+{% include "hyperadminclient/includes/links.html" with links=outbound_links %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block templated_queries %}
+{% with state.get_templated_queries as templated_queries %}
+{% if templated_queries %}
+<h2>Templated Queries</h2>
+<div id=templated_queries">
+{% include "hyperadminclient/includes/templated_queries.html" with links=templated_queries %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block non_idempotent_updates %}
+{% with state.get_ln_links as non_idempotent_updates %}
+{% if non_idempotent_updates %}
+<h2>Non-Idempotent Updates</h2>
+<div id="non_idempotent_updates">
+{% include "hyperadminclient/includes/links.html" with links=non_idempotent_updates %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block idempotent_updates %}
+{% with state.get_idempotent_links as idempotent_updates %}
+{% if idempotent_updates %}
+<h2>Idempotent Updates</h2>
+<div id="idempotent_updates">
+{% include "hyperadminclient/includes/links.html" with links=idempotent_updates %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+
+{% block link %}
+{% if link.form %}
+<h2>Main Link</h2>
+<div id="main_link">
+{% include "hyperadminclient/includes/link.html" %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block errors %}
+{% if link.errors %}
+<h2>Errors</2>
+<div id="errors" class="errors">
+{{link.errors}}
+</div>
+{% endif %}
+{% endblock errors %}
+
+{% block items %}
+{% with state.get_resource_items as items %}
+<h2>Items</h2>
+<div id="items">
+{% include "hyperadminclient/includes/items.html" with items=items %}
+</div>
+{% endwith %}
+{% endblock items %}
+
+{% block namespaces %}
+{% for namespace in namespaces.itervalues %}
+    <h2>Namespace: {{namespace.name}}</h2>
+    {% include_namespace namespace %}
+{% endfor %}
+{% endblock namespaces %}
+
+{% endblock %}
