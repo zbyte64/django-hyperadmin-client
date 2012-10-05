@@ -7,8 +7,12 @@
 {% with state.get_outbound_links as outbound_links %}
 {% if outbound_links %}
 <h2>Breadcrumbs</h2>
-<div id="outbound_links">
-{% include "hyperadminclient/includes/links.html" with links=outbound_links %}
+<div id="breadcrumbs">
+{% include "hyperadminclient/includes/breadcrumbs.html" with links=outbound_links %}
+</div>
+<h2>Links</h2>
+<div>
+{% include "hyperadminclient/includes/outboundlinks.html" with links=outbound_links %}
 </div>
 {% endif %}
 {% endwith %}

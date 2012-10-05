@@ -1,0 +1,5 @@
+{% for link in links %}
+{% if link.rel == "breadcrumb" %}
+{% include "hyperadminclient/includes/link.html" %}
+{% endif %}
+{% endfor %}
