@@ -74,6 +74,15 @@
 {% endif %}
 {% endblock %}
 
+{% block item_namespaces %}
+<div class="namespaces">
+{% for namespace in item.get_namespaces.itervalues %}
+    <a href="{{namespace.link.url}}">Namespace: {{namespace.name}}</a><br/>
+    {# include_namespace namespace #}
+{% endfor %}
+</div>
+{% endblock item_namespaces %}
+
 </div>
 {% endwith %}
 {% endblock content %}
