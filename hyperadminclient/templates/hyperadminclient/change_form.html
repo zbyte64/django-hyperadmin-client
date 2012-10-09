@@ -81,7 +81,7 @@
 {% block item_namespaces %}
 <div class="namespaces">
 {% for namespace in item.get_namespaces.itervalues %}
-    <a href="{{namespace.link.url}}">Namespace: {{namespace.name}}</a><br/>
+    <a href="{{namespace.link.get_absolute_url}}">Namespace: {{namespace.name}}</a><br/>
     {# include_namespace namespace #}
 {% endfor %}
 </div>
