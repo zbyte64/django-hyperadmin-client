@@ -35,7 +35,7 @@
 {% endwith %}
 {% endblock %}
 {% block link %}
-{% if link.form %}
+{% if not link.is_simple_link %}
 <div id="main_link">
 {% include "hyperadminclient/includes/link.html" %}
 </div>
@@ -47,25 +47,28 @@
 <div class="hypermediaitem item">
 
 {% block item_outbound_links %}
-{% if item.outbound_links %}
+{% if item.get_outbound_links %}
 <div class="outbound_links">
-{% include "hyperadminclient/includes/links.html" with links=item.outbound_links %}
+{% include "hyperadminclient/includes/links.html" with links=item.get_outbound_links %}
 </div>
 {% endif %}
 {% endblock %}
 
 {% block item_embedded_links %}
-{% if item.embedded_links %}
+{% if item.get_embedded_links %}
 <div class="embedded_links">
-{% include "hyperadminclient/includes/links.html" with links=item.embedded_links %}
+{% include "hyperadminclient/includes/links.html" with links=item.get_embedded_links %}
 </div>
 {% endif %}
 {% endblock %}
 
 {% block item_namespaces %}
-<div class="namespaces visible-desktop">
+<div class="namespaces">
 {% for namespace in item.get_namespaces.itervalues %}
     <a href="{{namespace.link.get_absolute_url}}">Namespace: {{namespace.name}}</a><br/>
+    <div class="visible-desktop">
+    {# include_namespace namespace #}
+    </div>
 {% endfor %}
 </div>
 {% endblock item_namespaces %}
