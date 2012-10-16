@@ -1,23 +1,8 @@
 {% extends "hyperadminclient/base.html" %}
 
-{% block content %}
+{% block body %}
 {% with state.get_resource_items.0 as item %}
 <div class="hypermediaresource">
-
-{% block outbound_links %}
-{% with state.get_outbound_links as outbound_links %}
-{% if outbound_links %}
-<h2>Breadcrumbs</h2>
-<div id="breadcrumbs">
-{% include "hyperadminclient/includes/breadcrumbs.html" with links=outbound_links %}
-</div>
-<h2>Links</h2>
-<div>
-{% include "hyperadminclient/includes/outboundlinks.html" with links=outbound_links %}
-</div>
-{% endif %}
-{% endwith %}
-{% endblock %}
 
 {% block templated_queries %}
 {% with state.get_templated_queries as templated_queries %}
@@ -51,7 +36,6 @@
 {% endblock %}
 {% block link %}
 {% if link.form %}
-<h2>Main Link</h2>
 <div id="main_link">
 {% include "hyperadminclient/includes/link.html" %}
 </div>
@@ -79,15 +63,14 @@
 {% endblock %}
 
 {% block item_namespaces %}
-<div class="namespaces">
+<div class="namespaces visible-desktop">
 {% for namespace in item.get_namespaces.itervalues %}
     <a href="{{namespace.link.get_absolute_url}}">Namespace: {{namespace.name}}</a><br/>
-    {# include_namespace namespace #}
 {% endfor %}
 </div>
 {% endblock item_namespaces %}
 
 </div>
 {% endwith %}
-{% endblock content %}
+{% endblock body %}
 

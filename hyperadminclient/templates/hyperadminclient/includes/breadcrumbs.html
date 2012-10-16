@@ -1,5 +1,8 @@
+<ul class="breadcrumb">
 {% for link in links %}
 {% if link.rel == "breadcrumb" %}
+<li>
 {% include "hyperadminclient/includes/link.html" %}
+</li>
 {% endif %}
 {% endfor %}

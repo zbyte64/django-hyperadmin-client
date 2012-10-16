@@ -1,9 +1,105 @@
-<html>
-<head></head>
-<body>
-{% block content %}
+{% load hyperadmin_utils %}<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
 
-{% endblock %}
+    <link rel="stylesheet" href="{{STATIC_URL}}hyperadminclient/initializr/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+    </style>
+    <link rel="stylesheet" href="{{STATIC_URL}}hyperadminclient/initializr/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}hyperadminclient/initializr/css/main.css">
+
+    <script src="{{STATIC_URL}}hyperadminclient/initializr/js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+    
+
+  <link rel="stylesheet" href="{{STATIC_URL}}hyperadminclient/client/css/style.css?v=2">
+  
+</head>
+<body data-api-endpoint="{{api_endpoint}}">
+{% block breadcrumbs %}
+{% if breadcrumbs %}
+<div id="breadcrumbs">
+{% include "hyperadminclient/includes/breadcrumbs.html" with links=breadcrumbs %}
 </div>
+{% endif %}
+{% endblock %}
+
+  <div class="container hypermediaresource">
+  {% block content %}
+
+{% block embedded_links %}
+{% with state.get_embedded_links as embedded_links %}
+{% if embedded_links %}
+<h2>Embedded Links</h2>
+<div id="embedded_links">
+{% include "hyperadminclient/includes/links.html" with links=embedded_links %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block outbound_links %}
+{% with state.get_outbound_links as outbound_links %}
+{% if outbound_links %}
+<div>
+{% include "hyperadminclient/includes/outboundlinks.html" with links=outbound_links %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+
+  {# messages here #}
+  {% block topcontent %}
+  {% endblock %}
+  
+{% block errors %}
+{% if link.errors %}
+<h2>Errors</2>
+<div id="errors" class="errors">
+{{link.errors}}
+</div>
+{% endif %}
+{% endblock errors %}
+  {% block body %}
+  
+  {% endblock %}
+  {% block bottomcontent %}
+  {% endblock %}
+  {% endblock %}
+  </div>
+  <!--[if lt IE 7]>
+    <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+  <![endif]-->
+  
+  <!-- The missing protocol means that it will match the current protocol, either http or https. If running locally, we use the local jQuery. -->
+  <!--
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="{{STATIC_URL}}hyperadmin/initializr/js/vendor/jquery-1.8.0.min.js"><\/script>')</script>
+  -->
+  <script src="{{STATIC_URL}}hyperadminclient/initializr/js/vendor/bootstrap.min.js"></script>
+  <script src="{{STATIC_URL}}hyperadminclient/initializr/js/main.js"></script>
+  
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="{{STATIC_URL}}/hyperadminclient/client/js/libs/jquery-1.7.2.min.js"><\/script>')</script>
+  <script src="{{STATIC_URL}}hyperadminclient/jquery-file-upload/vendor/jquery.ui.widget.js"></script>
+  <script src="{{STATIC_URL}}hyperadminclient/jquery-file-upload/jquery.fileupload.js"></script>
+  <script src="{{STATIC_URL}}hyperadminclient/jquery-file-upload/jquery.iframe-transport.js"></script>
+  {% comment %}
+  <script src="{{STATIC_URL}}hyperadminclient/client/js/libs/handlebars-1.0.0.beta.6.js"></script>
+  <script src="{{STATIC_URL}}hyperadminclient/client/js/libs/ember-1.0.pre.js"></script>
+  <script src="{{STATIC_URL}}hyperadminclient/client/js/app.js"></script>
+  {% endcomment %}
 </body>
 </html>

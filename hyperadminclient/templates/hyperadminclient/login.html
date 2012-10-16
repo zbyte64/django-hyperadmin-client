@@ -1,28 +1,6 @@
 {% extends "hyperadminclient/base.html" %}
 
-{% block content %}
-<div class="hypermediaresource">
-{% block embedded_links %}
-{% with state.get_embedded_links as embedded_links %}
-{% if embedded_links %}
-<h2>Embedded Links</h2>
-<div id="embedded_links">
-{% include "hyperadminclient/includes/links.html" with links=embedded_links %}
-</div>
-{% endif %}
-{% endwith %}
-{% endblock %}
-
-{% block outbound_links %}
-{% with state.get_outbound_links as outbound_links %}
-{% if outbound_links %}
-<h2>Breadcrumbs</h2>
-<div id="outbound_links">
-{% include "hyperadminclient/includes/links.html" with links=outbound_links %}
-</div>
-{% endif %}
-{% endwith %}
-{% endblock %}
+{% block body %}
 
 {% block templated_queries %}
 {% with state.get_templated_queries as templated_queries %}
@@ -79,5 +57,5 @@
 </div>
 {% endfor %}
 {% endwith %}
-{% endblock content %}
+{% endblock body %}
 

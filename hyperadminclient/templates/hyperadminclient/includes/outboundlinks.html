@@ -1,5 +1,7 @@
+<div class="btn-group">
 {% for link in links %}
 {% if link.rel != "breadcrumb" %}
-{% include "hyperadminclient/includes/link.html" %}
+{% include "hyperadminclient/includes/link.html" with class="btn" %}
 {% endif %}
 {% endfor %}
+</div>

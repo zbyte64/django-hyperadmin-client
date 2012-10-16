@@ -1,54 +1,48 @@
 {% extends "hyperadminclient/base.html" %}
 
-{% block content %}
-<div class="hypermediaresource">
-
-{% block outbound_links %}
-{% with state.get_outbound_links as outbound_links %}
-{% if outbound_links %}
-<h2>Breadcrumbs</h2>
-<div id="breadcrumbs">
-{% include "hyperadminclient/includes/breadcrumbs.html" with links=outbound_links %}
-</div>
-<h2>Links</h2>
-<div>
-{% include "hyperadminclient/includes/outboundlinks.html" with links=outbound_links %}
-</div>
-{% endif %}
-{% endwith %}
-{% endblock %}
+{% block body %}
 
 {% block templated_queries %}
-{% with state.get_templated_queries as templated_queries %}
-{% if templated_queries %}
-<h2>Templated Queries</h2>
-<div id=templated_queries">
-{% include "hyperadminclient/includes/templated_queries.html" with links=templated_queries %}
+{% if pagination_links %}
+{% if meta.object_count %}<em>Count</em>: <span class="count">{{meta.object_count}}</span><br/>{% endif %}
+{% if meta.number_of_pages %}<em>Pages</em>: <span class="page_count">{{meta.number_of_pages}}</span><br/>{% endif %}
+
+<div class="pagination">
+<ul>
+{% for link in pagination_links %}
+<li>{% include "hyperadminclient/includes/link.html" with link=link %}</li>
+{% endfor %}
+</ul>
 </div>
 {% endif %}
-{% endwith %}
+
+{% for section, links in filter_links.iteritems %}
+    <h2>{{section}}</h2>
+    {% include "hyperadminclient/includes/templated_queries.html" with links=links%}
+{% endfor %}
 {% endblock %}
 
 {% block items %}
 {% with state.get_resource_items as items %}
-<h2>Items</h2>
-<div id="items">
+{% if meta.display_fields %}
+<table id="items">
+<thead>
+    <tr>
+    <th>{{state.resource.resource_name}}<th>
+    {% for field in meta.display_fields %}
+    <th>{{field.prompt}}</th>
+    {% endfor %}
+    </tr>
+</thead>
+<tbody>
+{% include "hyperadminclient/includes/table_items.html" %}
+</tbody>
+</table>
+{% else %}
 {% include "hyperadminclient/includes/items.html" %}
-</div>
-{% endwith %}
-{% endblock items %}
-
-{% block embedded_links %}
-{% with state.get_embedded_links as embedded_links %}
-{% if embedded_links %}
-<h2>Embedded Links</h2>
-<div id="embedded_links">
-{% include "hyperadminclient/includes/links.html" with links=embedded_links %}
-</div>
 {% endif %}
 {% endwith %}
-{% endblock %}
-
+{% endblock items %}
 </div>
-{% endblock content %}
+{% endblock body %}
 
