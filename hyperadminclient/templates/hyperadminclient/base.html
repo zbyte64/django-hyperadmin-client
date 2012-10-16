@@ -52,8 +52,10 @@
 {% block outbound_links %}
 {% with state.get_outbound_links as outbound_links %}
 {% if outbound_links %}
-<div>
+<div class="row">
+<div class="span9">
 {% include "hyperadminclient/includes/outboundlinks.html" with links=outbound_links %}
+</div>
 </div>
 {% endif %}
 {% endwith %}

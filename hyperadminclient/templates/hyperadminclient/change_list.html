@@ -4,9 +4,8 @@
 
 {% block templated_queries %}
 {% if pagination_links %}
-{% if meta.object_count %}<em>Count</em>: <span class="count">{{meta.object_count}}</span><br/>{% endif %}
-{% if meta.number_of_pages %}<em>Pages</em>: <span class="page_count">{{meta.number_of_pages}}</span><br/>{% endif %}
-
+<div class="row">
+<div class="span7">
 <div class="pagination">
 <ul>
 {% for link in pagination_links %}
@@ -14,15 +13,26 @@
 {% endfor %}
 </ul>
 </div>
+</div>
+
+{% if meta.object_count %}<div class="span1"><em>Count</em>: <span class="count">{{meta.object_count}}</span></div>{% endif %}
+{% if meta.number_of_pages %}<div class="span1"><em>Pages</em>: <span class="page_count">{{meta.number_of_pages}}</span></div>{% endif %}
+</div>
 {% endif %}
 
+<div class="row">
 {% for section, links in filter_links.iteritems %}
+    <div class="span3">
     <h2>{{section}}</h2>
     {% include "hyperadminclient/includes/templated_queries.html" with links=links%}
+    </div>
 {% endfor %}
+</div>
 {% endblock %}
 
 {% block items %}
+<div class="row">
+<div class="span9">
 {% with state.get_resource_items as items %}
 {% if meta.display_fields %}
 <table id="items">
@@ -42,7 +52,8 @@
 {% include "hyperadminclient/includes/items.html" %}
 {% endif %}
 {% endwith %}
-{% endblock items %}
 </div>
+</div>
+{% endblock items %}
 {% endblock body %}
 

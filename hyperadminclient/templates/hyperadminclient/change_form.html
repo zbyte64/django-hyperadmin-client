@@ -2,37 +2,86 @@
 
 {% block body %}
 {% with state.get_resource_items.0 as item %}
-<div class="hypermediaitem item">
+<div class="hypermediaitem row">
+
+<div class="item span9">
 {% block link %}
 {% if not link.is_simple_link %}
-<div id="main_link">
+<div id="main_link" class="row">
+<div class="span9">
 {% include "hyperadminclient/includes/link.html" %}
+</div>
 </div>
 {% endif %}
 {% endblock %}
 
 {% block item_outbound_links %}
 {% if item.get_outbound_links %}
-<div class="outbound_links">
+<div class="outbound_links row">
+<div class="span9">
 {% include "hyperadminclient/includes/links.html" with links=item.get_outbound_links %}
+</div>
 </div>
 {% endif %}
 {% endblock %}
 
 {% block item_embedded_links %}
 {% if item.get_embedded_links %}
-<div class="embedded_links">
+<div class="embedded_links row">
+<div class="span9">
 {% include "hyperadminclient/includes/links.html" with links=item.get_embedded_links %}
+</div>
 </div>
 {% endif %}
 {% endblock %}
+</div>
 
 {% block item_namespaces %}
-<div class="namespaces">
+<div class="namespace span9">
 {% for namespace in item.get_namespaces.itervalues %}
-    <a href="{{namespace.link.get_absolute_url}}">Namespace: {{namespace.name}}</a><br/>
-    <div class="visible-desktop">
-    {# include_namespace namespace #}
+    <div class="namespace {{namespace.name}}">
+    <div class="row-fluid">
+    <div class="span4">
+    {% if namespace.link.is_simple_link %}
+    {% include "hyperadminclient/includes/link.html" with link=namespace.link class="btn btn-link" %}
+    {% else %}
+    {% include "hyperadminclient/includes/link.html" with link=namespace.link class="visible-desktop" %}
+    {% endif %}
+    </div>
+    
+    {% with namespace.state.get_outbound_links as outbound_links %}
+    {% if outbound_links %}
+    <div class="span3">
+    {% include "hyperadminclient/includes/outboundlinks.html" with links=outbound_links %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    </div>
+    
+    <div class="namespace-items row-fluid">
+    {% for subitem in namespace.state.get_resource_items %}
+        <div class="namespace-item span4">
+        <div class="namespace-form">
+        {% with subitem.get_item_link as item_link %}
+        {% with item_link.submit as update_link %}
+        {% if update_link and not update_link.is_simple_link %}
+        {% include "hyperadminclient/includes/link.html" with link=item_link class="hidden-desktop" %}
+        {% include "hyperadminclient/includes/link.html" with link=update_link class="visible-desktop" %}
+        {% else %}
+        {% include "hyperadminclient/includes/link.html" with link=item_link %}
+        {% endif %}
+        {% endwith %}
+        {% endwith %}
+        </div>
+        
+        {% if subitem.get_outbound_links %}
+        <div class="namespace-outbound_links">
+        {% include "hyperadminclient/includes/links.html" with links=subitem.get_outbound_links %}
+        </div>
+        {% endif %}
+        </div>
+    {% endfor %}
+    </div>
     </div>
 {% endfor %}
 </div>

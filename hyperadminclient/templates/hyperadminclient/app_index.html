@@ -1,14 +1,18 @@
 {% extends "hyperadminclient/base.html" %}
 
 {% block body %}
-<h1>{{state.resource.app_name}} Administration</h1>
+<h1>{{state.resource.get_prompt}} Administration</h1>
 
 {% block items %}
+<div class="row">
+<div class="span9">
 {% with state.get_resource_items as items %}
 <table id="items">
 {% include "hyperadminclient/includes/resource_items.html" %}
 </table>
 {% endwith %}
+</div>
+</div>
 {% endblock items %}
 {% endblock body %}
 
