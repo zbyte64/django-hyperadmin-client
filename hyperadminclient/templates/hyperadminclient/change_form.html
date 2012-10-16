@@ -90,3 +90,41 @@
 {% endwith %}
 {% endblock body %}
 
+{% block extra_js %}
+{{block.super}}
+<script>
+$(document).ready(function() {
+    //init file uploads
+    var file_fields = $('.hypermediaitem input[type="file"]')
+    App.initUploadFile(file_fields)
+    //TODO file uploads means all forms are JSON submitted
+    
+    $('.namespace form').live('submit', function() {
+        var form = $(this);
+        
+        var handleResponse = function(data, textStatus, jqXHR) {
+            var main_link = $(data).find('#main_link')
+            if (main_link.length) {
+                var top = form.parents('.namespace-form:first').html(main_link.contents())
+                var namespace_file_fields = top.find('input[type="file"]')
+                App.initUploadFile(namespace_file_fields)
+            } else {
+                alert('Unable to get inline response')
+            }
+        }
+        
+        payload = App.serializeFormJSON(form);
+        var settings = $.extend({}, App.requestDefaults, {
+            url: form.attr('action'),
+            type: form.attr('method') || 'POST',
+            data: payload,
+            success: handleResponse,
+            dataType: "html"
+        })
+        $.ajax(settings)
+        return false;
+    });
+});
+</script>
+{% endblock %}
+
