@@ -2,38 +2,7 @@
 
 {% block body %}
 {% with state.get_resource_items.0 as item %}
-<div class="hypermediaresource">
-
-{% block templated_queries %}
-{% with state.get_templated_queries as templated_queries %}
-{% if templated_queries %}
-<h2>Templated Queries</h2>
-<div id=templated_queries">
-{% include "hyperadminclient/includes/templated_queries.html" with links=templated_queries %}
-</div>
-{% endif %}
-{% endwith %}
-{% endblock %}
-
-{% block non_idempotent_updates %}
-{% with item.get_ln_links as non_idempotent_updates %}
-{% if non_idempotent_updates %}
-<div id="non_idempotent_updates">
-{% include "hyperadminclient/includes/link.html" with link=form_link %}
-</div>
-{% endif %}
-{% endwith %}
-{% endblock %}
-
-{% block idempotent_updates %}
-{% with item.get_idempotent_links as idempotent_updates %}
-{% if idempotent_updates %}
-<div id="idempotent_updates">
-{% include "hyperadminclient/includes/links.html" with links=idempotent_updates %}
-</div>
-{% endif %}
-{% endwith %}
-{% endblock %}
+<div class="hypermediaitem item">
 {% block link %}
 {% if not link.is_simple_link %}
 <div id="main_link">
@@ -41,10 +10,6 @@
 </div>
 {% endif %}
 {% endblock %}
-</div>
-
-
-<div class="hypermediaitem item">
 
 {% block item_outbound_links %}
 {% if item.get_outbound_links %}
@@ -73,7 +38,6 @@
 </div>
 {% endblock item_namespaces %}
 
-</div>
 {% endwith %}
 {% endblock body %}
 

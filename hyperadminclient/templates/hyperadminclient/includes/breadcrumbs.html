@@ -1,8 +1,6 @@
 <ul class="breadcrumb">
 {% for link in links %}
-{% if link.rel == "breadcrumb" %}
-<li>
-{% include "hyperadminclient/includes/link.html" %}
+<li {% if forloop.last %}class="active"{% endif %}>
+{% include "hyperadminclient/includes/simple_link.html" %}{% if not forloop.last %}<span class="divider">/</span>{% endif %}
 </li>
-{% endif %}
 {% endfor %}
