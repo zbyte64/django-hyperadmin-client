@@ -40,16 +40,17 @@
 <div class="namespace span9">
 {% for namespace in item.get_namespaces.itervalues %}
     <div class="namespace {{namespace.name}}">
+    <h3>{{namespace.name}}</h3>
     <div class="row-fluid">
-    <div class="span4">
     {% comment %}
+    <div class="span4">
     {% if namespace.link.is_simple_link %}
     {% include "hyperadminclient/includes/link.html" with link=namespace.link class="btn btn-link" %}
     {% else %}
     {% include "hyperadminclient/includes/link.html" with link=namespace.link class="visible-desktop" %}
     {% endif %}
-    {% endcomment %}
     </div>
+    {% endcomment %}
     
     {% with namespace.state.get_outbound_links as outbound_links %}
     {% if outbound_links %}
