@@ -42,11 +42,13 @@
     <div class="namespace {{namespace.name}}">
     <div class="row-fluid">
     <div class="span4">
+    {% comment %}
     {% if namespace.link.is_simple_link %}
     {% include "hyperadminclient/includes/link.html" with link=namespace.link class="btn btn-link" %}
     {% else %}
     {% include "hyperadminclient/includes/link.html" with link=namespace.link class="visible-desktop" %}
     {% endif %}
+    {% endcomment %}
     </div>
     
     {% with namespace.state.get_outbound_links as outbound_links %}
@@ -65,7 +67,7 @@
         {% with subitem.get_item_link as item_link %}
         {% with item_link.submit as update_link %}
         {% if update_link and not update_link.is_simple_link %}
-        {% include "hyperadminclient/includes/link.html" with link=item_link class="hidden-desktop" %}
+        {% include "hyperadminclient/includes/link.html" with link=item_link %}
         {% include "hyperadminclient/includes/link.html" with link=update_link class="visible-desktop" %}
         {% else %}
         {% include "hyperadminclient/includes/link.html" with link=item_link %}
