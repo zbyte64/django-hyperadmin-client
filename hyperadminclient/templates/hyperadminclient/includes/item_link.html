@@ -1,0 +1,25 @@
+<div class="hypermedialink {{class}}">
+<form method="{{link.method}}" action="{{link.get_absolute_url}}" class="{{link.class_attr}}" rel="{{link.rel}}" enctype="multipart/form-data">
+{% csrf_token %}
+<table>
+{{link.form.as_table}}
+</table>
+
+<div class="btn-toolbar">
+
+<div class="btn-group">
+<input type="submit" value="{{link.prompt}}" class="btn btn-primary"/>
+</div>
+
+{% block item_outbound_links %}
+{% if item.get_outbound_links %}
+<div class="btn-group">
+{% include "hyperadminclient/includes/links.html" with links=item.get_outbound_links %}
+</div>
+{% endif %}
+{% endblock %}
+</div>
+
+</form>
+</div>
+

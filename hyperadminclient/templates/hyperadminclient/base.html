@@ -51,15 +51,13 @@
 {% endblock %}
 
 {% block outbound_links %}
-{% with state.get_outbound_links as outbound_links %}
-{% if outbound_links %}
+{% if tool_links %}
 <div class="row">
-<div class="span9">
-{% include "hyperadminclient/includes/outboundlinks.html" with links=outbound_links %}
+<div class="tools btn-toolbar span9">
+{% include "hyperadminclient/includes/tool_links.html" with tools=tool_links %}
 </div>
 </div>
 {% endif %}
-{% endwith %}
 {% endblock %}
 
 

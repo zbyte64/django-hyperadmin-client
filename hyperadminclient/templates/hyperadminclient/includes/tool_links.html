@@ -1,0 +1,20 @@
+{% for tool in tools %}
+<div class="btn-group">
+{% if tool.dropdown %}
+  <button class="btn dropdown-toggle {{class}}" data-toggle="dropdown">
+    {{tool.prompt}}
+    <span class="caret"></span>
+  </button>
+<ul class="dropdown-menu">
+{% for link in tool.links %}
+<li>
+  <a href="{{link.get_absolute_url}}" rel="{{link.rel}}">{{link.prompt}}</a>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+{% include "hyperadminclient/includes/link.html" with class="btn" link=tool.link %}
+{% endif %}
+</div>
+{% endfor %}
+

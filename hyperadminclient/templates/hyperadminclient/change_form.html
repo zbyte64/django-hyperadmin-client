@@ -9,17 +9,7 @@
 {% if not link.is_simple_link %}
 <div id="main_link" class="row">
 <div class="span9">
-{% include "hyperadminclient/includes/link.html" %}
-</div>
-</div>
-{% endif %}
-{% endblock %}
-
-{% block item_outbound_links %}
-{% if item.get_outbound_links %}
-<div class="outbound_links row">
-<div class="span9">
-{% include "hyperadminclient/includes/links.html" with links=item.get_outbound_links %}
+{% include "hyperadminclient/includes/item_link.html" %}
 </div>
 </div>
 {% endif %}
