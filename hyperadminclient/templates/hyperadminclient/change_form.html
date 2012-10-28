@@ -30,7 +30,7 @@
 <div class="namespace span9">
 {% for namespace in item.get_namespaces.itervalues %}
     <div class="namespace {{namespace.name}}">
-    <h3>{{namespace.name}}</h3>
+    <h3><a href="{{namespace.link.get_absolute_url}}">{{namespace.name}}</a></h3>
     <div class="row-fluid">
     {% comment %}
     <div class="span4">

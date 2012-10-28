@@ -13,7 +13,11 @@ class AdminHtml5MediaType(Html5MediaType):
         context['tool_links'] = list()
         for link in tool_links:
             if link.is_simple_link and link.form_class:
-                context['tool_links'].append({'links':link.clone_into_links(), 'dropdown':True, 'prompt':link.prompt})
+                links = link.clone_into_links()
+                if links:
+                    context['tool_links'].append({'links':link.clone_into_links(), 'dropdown':True, 'prompt':link.prompt})
+                else:
+                    context['tool_links'].append({'link':link, 'dropdown':False})
             else:
                 context['tool_links'].append({'link':link, 'dropdown':False})
         context['breadcrumbs'] = [link for link in links if link.rel == 'breadcrumb']
