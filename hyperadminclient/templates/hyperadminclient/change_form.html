@@ -86,8 +86,28 @@ $(document).ready(function() {
     $('#main_link form').live('submit', function() {
         var form = $(this);
         
-        var handleResponse = function(data, textStatus, jqXHR) {
+        function baseUrl() {
+           var href = window.location.href.split('/');
+           return href[0]+'//'+href[2]+'/';
+        }
+        
+        function currentUrl() {
+           return window.location.href.substr(baseUrl().length)
+           
+        }
+        
+        function redirect(relative_url) {
+            window.location.href = baseUrl() + relative_url.substr(1)
+        }
+        
+        var handleResponse =  function(data, textStatus, jqXHR) {
             var main_link = $(data).find('#main_link')
+            var location = main_link.find('form').attr('action')
+            var current_location = currentUrl()
+            if (current_location != location) {
+                redirect(location);
+            }
+            
             if (main_link.length) {
                 var top = form.parents('#main_link').html(main_link.contents())
                 var main_file_fields = top.find('input[type="file"]')

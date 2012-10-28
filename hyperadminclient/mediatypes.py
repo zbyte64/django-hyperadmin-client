@@ -10,6 +10,8 @@ class AdminHtml5MediaType(Html5MediaType):
         links = state.get_outbound_links()
         context['tool_links'] = [link for link in links if link.rel != 'breadcrumb']
         context['breadcrumbs'] = [link for link in links if link.rel == 'breadcrumb']
+        if state.get('view_classes', None):
+            context['body_class'] = ' '.join(state['view_classes'])
         return context
     
     def get_change_list_context_data(self, link, state, context):
