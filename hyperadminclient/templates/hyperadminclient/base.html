@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load admin_links %}<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -54,7 +54,7 @@
 {% if tool_links %}
 <div class="row">
 <div class="tools btn-toolbar span9">
-{% include "hyperadminclient/includes/tool_links.html" with tools=tool_links %}
+{% tool_links tool_links %}
 </div>
 </div>
 {% endif %}

@@ -8,18 +8,7 @@ class AdminHtml5MediaType(Html5MediaType):
     def get_context_data(self, link, state):
         context = super(AdminHtml5MediaType, self).get_context_data(link, state)
         links = state.get_outbound_links()
-        tool_links = [link for link in links if link.rel != 'breadcrumb']
-        #TODO convert into template tag
-        context['tool_links'] = list()
-        for link in tool_links:
-            if link.is_simple_link and link.form_class:
-                links = link.clone_into_links()
-                if links:
-                    context['tool_links'].append({'links':link.clone_into_links(), 'dropdown':True, 'prompt':link.prompt})
-                else:
-                    context['tool_links'].append({'link':link, 'dropdown':False})
-            else:
-                context['tool_links'].append({'link':link, 'dropdown':False})
+        context['tool_links'] = [link for link in links if link.rel != 'breadcrumb']
         context['breadcrumbs'] = [link for link in links if link.rel == 'breadcrumb']
         return context
     

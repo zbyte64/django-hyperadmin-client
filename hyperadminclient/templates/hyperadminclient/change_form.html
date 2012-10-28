@@ -1,4 +1,5 @@
 {% extends "hyperadminclient/base.html" %}
+{% load admin_links %}
 
 {% block body %}
 {% with state.get_resource_items.0 as item %}
@@ -45,7 +46,7 @@
     {% with namespace.state.get_outbound_links as outbound_links %}
     {% if outbound_links %}
     <div class="span3">
-    {% include "hyperadminclient/includes/outboundlinks.html" with links=outbound_links %}
+    {% tool_links outbound_links %}
     </div>
     {% endif %}
     {% endwith %}
@@ -53,25 +54,15 @@
     
     <div class="namespace-items row-fluid">
     {% for subitem in namespace.state.get_resource_items %}
-        <div class="namespace-item span4">
-        <div class="namespace-form">
+        <div class="namespace-form span4">
         {% with subitem.get_item_link as item_link %}
+        {% include "hyperadminclient/includes/simple_link.html" with link=item_link %}
         {% with item_link.submit as update_link %}
         {% if update_link and not update_link.is_simple_link %}
-        {% include "hyperadminclient/includes/link.html" with link=item_link %}
-        {% include "hyperadminclient/includes/link.html" with link=update_link class="visible-desktop" %}
-        {% else %}
-        {% include "hyperadminclient/includes/link.html" with link=item_link %}
+        {% include "hyperadminclient/includes/item_link.html" with link=update_link item=subitem class="visible-desktop" %}
         {% endif %}
         {% endwith %}
         {% endwith %}
-        </div>
-        
-        {% if subitem.get_outbound_links %}
-        <div class="namespace-outbound_links">
-        {% include "hyperadminclient/includes/links.html" with links=subitem.get_outbound_links %}
-        </div>
-        {% endif %}
         </div>
     {% endfor %}
     </div>
