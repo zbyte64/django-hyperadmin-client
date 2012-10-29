@@ -11,8 +11,12 @@ def tool_links(context, links):
     for link in links:
         if link.rel == 'breadcrumb':
             continue
-        if link.is_simple_link and link.form_class:
-            cloned_links = link.clone_into_links()
+        if link.get_link_factor() == "LT":
+            try:
+                cloned_links = link.clone_into_links()
+            except Exception, error:
+                print error
+                cloned_links = []
             if cloned_links:
                 context['tools'].append({'links':cloned_links, 'dropdown':True, 'prompt':link.prompt})
             else:

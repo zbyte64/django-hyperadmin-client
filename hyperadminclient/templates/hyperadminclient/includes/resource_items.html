@@ -1,29 +1,36 @@
+{% load admin_links %}
 {% for item in items %}
-<tr class="hypermediaitem item">
+{% if item.instance.resource_class == "resourcelisting" %}
+{% if not forloop.first %}</div>{% endif %}
+<div class="row">
+<div class="span4">
 
-<td class="self_link">
+<div class="self_link">
+    <h3><a href="{{item.get_absolute_url}}" rel="item">{{item.get_prompt}}</a></h3>
+</div>
+</div>
+</div>
+<div class="row-fluid">
+{% else %}
+<div class="span4">
+
+<div class="self_link">
     <a href="{{item.get_absolute_url}}" rel="item">{{item.get_prompt}}</a>
-</td>
+</div>
 
-{% block data %}
-{% if item.form and item.form.fields %}
-{% for row in item.form %}
-<td class="{{row.name}}">
-{{row.value}}
-</td>
-{% endfor %}
-{% endif %}
-{% endblock %}
 
 {% block item_outbound_links %}
 {% with item.get_outbound_links as outbound_links %}
 {% if outbound_links %}
-<td class="outbound_links">
-{% include "hyperadmin/html5/links.html" with links=outbound_links %}
-</td>
+<div class="tools btn-toolbar">
+{% tool_links outbound_links %}
+</div>
 {% endif %}
 {% endwith %}
 {% endblock %}
-</tr>
+
+</div>
+{% endif %}
 {% endfor %}
+</div>
 

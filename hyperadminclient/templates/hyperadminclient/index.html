@@ -3,16 +3,12 @@
 {% block body %}
 <h1>Site Administration</h1>
 
+<div id="application_listing" class="container">
 {% block items %}
-<div class="row">
-<div class="span9">
 {% with state.get_resource_items as items %}
-<table id="items">
 {% include "hyperadminclient/includes/resource_items.html" %}
-</table>
 {% endwith %}
-</div>
-</div>
 {% endblock items %}
+</div>
 
 {% endblock body%}
