@@ -15,7 +15,7 @@ class AdminHtml5MediaType(Html5MediaType):
         return context
     
     def get_change_list_context_data(self, link, state, context):
-        links = state.get_templated_queries()
+        links = state.get_index_queries()
         context['pagination_links'] = [link for link in links if link.rel == 'pagination']
         filter_links = dict()
         for link in links :
