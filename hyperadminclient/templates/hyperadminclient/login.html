@@ -2,6 +2,16 @@
 
 {% block body %}
 
+{% block link %}
+{% if not link.is_simple_link %}
+<div id="main_link" class="row">
+<div class="span9">
+{% include "hyperadminclient/includes/item_link.html" %}
+</div>
+</div>
+{% endif %}
+{% endblock %}
+
 {% block templated_queries %}
 {% with state.get_templated_queries as templated_queries %}
 {% if templated_queries %}
