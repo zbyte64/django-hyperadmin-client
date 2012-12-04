@@ -7,7 +7,7 @@ class AdminHtml5MediaType(Html5MediaType):
     
     def get_context_data(self, link, state):
         context = super(AdminHtml5MediaType, self).get_context_data(link, state)
-        links = state.get_outbound_links()
+        links = state.links.get_outbound_links()
         context['tool_links'] = [link for link in links if link.rel != 'breadcrumb']
         context['breadcrumbs'] = [link for link in links if link.rel == 'breadcrumb']
         if state.get('view_classes', None):
@@ -15,7 +15,7 @@ class AdminHtml5MediaType(Html5MediaType):
         return context
     
     def get_change_list_context_data(self, link, state, context):
-        links = state.get_index_queries()
+        links = state.links.get_index_queries()
         context['pagination_links'] = [link for link in links if link.rel == 'pagination']
         filter_links = dict()
         for link in links :

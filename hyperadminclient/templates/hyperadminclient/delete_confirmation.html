@@ -3,7 +3,7 @@
 {% block body %}
 
 {% block non_idempotent_updates %}
-{% with state.get_ln_links as non_idempotent_updates %}
+{% with state.links.get_ln_links as non_idempotent_updates %}
 {% if non_idempotent_updates %}
 <div id="non_idempotent_updates">
 {% include "hyperadminclient/includes/links.html" with links=non_idempotent_updates %}
@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block idempotent_updates %}
-{% with state.get_idempotent_links as idempotent_updates %}
+{% with state.links.get_idempotent_links as idempotent_updates %}
 {% if idempotent_updates %}
 <div id="idempotent_updates">
 {% include "hyperadminclient/includes/links.html" with links=idempotent_updates %}

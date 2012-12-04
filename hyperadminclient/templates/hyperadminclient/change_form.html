@@ -16,14 +16,16 @@
 {% endif %}
 {% endblock %}
 
-{% block item_embedded_links %}
-{% if item.get_embedded_links %}
-<div class="embedded_links row">
+{% block item_outbound_links %}
+{% with item.links.get_item_outbound_links as item_outbound_links %}
+{% if item_outbound_links %}
+<div class="outbound_links row">
 <div class="span9">
-{% include "hyperadminclient/includes/links.html" with links=item.get_embedded_links %}
+{% include "hyperadminclient/includes/links.html" with links=item_outbound_links %}
 </div>
 </div>
 {% endif %}
+{% endwith %}
 {% endblock %}
 </div>
 

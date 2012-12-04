@@ -40,7 +40,7 @@
   {% block content %}
 
 {% block embedded_links %}
-{% with state.get_embedded_links as embedded_links %}
+{% with state.links.get_embedded_links as embedded_links %}
 {% if embedded_links %}
 <h2>Embedded Links</h2>
 <div id="embedded_links">
