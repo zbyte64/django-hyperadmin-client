@@ -7,22 +7,20 @@ class AdminHtml5MediaType(Html5MediaType):
     
     def get_context_data(self, link, state):
         context = super(AdminHtml5MediaType, self).get_context_data(link, state)
-        links = state.links.get_outbound_links()
-        context['tool_links'] = [link for link in links if link.rel != 'breadcrumb']
-        context['breadcrumbs'] = [link for link in links if link.rel == 'breadcrumb']
+        context['tool_links'] = state.links.get_outbound_links()
+        context['breadcrumbs'] = state.links.get_breadcrumbs()
         if state.get('view_classes', None):
             context['body_class'] = ' '.join(state['view_classes'])
         return context
     
     def get_change_list_context_data(self, link, state, context):
-        links = state.links.get_index_queries()
-        context['pagination_links'] = [link for link in links if link.rel == 'pagination']
-        filter_links = dict()
-        for link in links :
-            if link.rel == 'filter':
-                section = link.cl_headers.get('group', link.prompt)
-                filter_links.setdefault(section, [])
-                filter_links[section].append(link)
-        context['filter_links'] = filter_links
+        context['pagination_links'] = state.links.get_pagination_links()
+        context['filter_links'] = dict()
+        
+        filter_links = state.links.get_filter_links()
+        for link in filter_links:
+            section = link.cl_headers.get('group', link.prompt)
+            context['filter_links'].setdefault(section, [])
+            context['filter_links'][section].append(link)
         return context
         

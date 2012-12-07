@@ -45,7 +45,7 @@
     </div>
     {% endcomment %}
     
-    {% with namespace.state.get_outbound_links as outbound_links %}
+    {% with namespace.state.links.get_outbound_links as outbound_links %}
     {% if outbound_links %}
     <div class="span3">
     {% tool_links outbound_links %}
