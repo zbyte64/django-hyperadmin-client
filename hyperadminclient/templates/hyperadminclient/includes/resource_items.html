@@ -20,7 +20,7 @@
 
 
 {% block item_outbound_links %}
-{% with item.get_outbound_links as outbound_links %}
+{% with item.links.get_item_outbound_links as outbound_links %}
 {% if outbound_links %}
 <div class="tools btn-toolbar">
 {% tool_links outbound_links %}
