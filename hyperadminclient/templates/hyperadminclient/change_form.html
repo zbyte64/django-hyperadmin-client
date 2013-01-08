@@ -57,7 +57,7 @@
     <div class="namespace-items row-fluid">
     {% for subitem in namespace.state.get_resource_items %}
         <div class="namespace-form span4">
-        {% with subitem.get_item_link as item_link %}
+        {% with subitem.get_link as item_link %}
         {% include "hyperadminclient/includes/simple_link.html" with link=item_link %}
         {% with item_link.submit as update_link %}
         {% if update_link and not update_link.is_simple_link %}
