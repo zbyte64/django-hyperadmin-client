@@ -1,0 +1,2 @@
+recursive-include hyperadminclient/templates *
+recursive-include hyperadminclient/static *
