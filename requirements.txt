@@ -1,1 +1,1 @@
--e git+git://github.com/zbyte64/django-hyperadmin.git#egg=django-hyperadmin
+-e git+git://github.com/webcube/django-hyperadmin.git#egg=django-hyperadmin
