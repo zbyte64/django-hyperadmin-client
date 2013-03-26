@@ -104,18 +104,19 @@ $(document).ready(function() {
         
         var handleResponse =  function(data, textStatus, jqXHR) {
             var main_link = $(data).find('#main_link')
-            var location = main_link.find('form').attr('action')
-            var current_location = currentUrl()
-            if (current_location != location) {
-                redirect(location);
-            }
             
             if (main_link.length) {
+                var location = main_link.find('form').attr('action')
+                var current_location = currentUrl()
+                if (current_location != location) {
+                    redirect(location);
+                }
+            
                 var top = form.parents('#main_link').html(main_link.contents())
                 var main_file_fields = top.find('input[type="file"]')
                 App.initUploadFile(main_file_fields)
             } else {
-                alert('Unable to get inline response')
+                alert('Unable to read response')
             }
         }
         
