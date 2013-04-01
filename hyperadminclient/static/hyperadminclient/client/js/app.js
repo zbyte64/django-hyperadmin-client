@@ -3,11 +3,21 @@ var App = {};
 App.serializeFormJSON = function(form) {
     //TODO power this by the view context as well as form
     var o = Array();
-    form.find(':input').each(function() {
+    form.find(':input:enabled').each(function() {
         var $this = $(this)
         if ($this.data('api-skip') || !$this.attr('name')) return;
-        var type = $this.data('api-type') || $this.attr('type') || 'text'
+        var tagname = $this.prop("tagName")
+        var inputtype = $this.attr('type')
+        var default_type = inputtype || 'text';
+        if (inputtype == 'checkbox') {
+            if (!$this.is(':checked')) return;
+            default_type = 'boolean'
+        }
+        var type = $this.data('api-type') || default_type;
         var value = $this.val()
+        if (type == 'boolean') {
+            value = value && true || false;
+        }
         var name = $this.attr('name')
         o.push({"type": type,
                 "value": value,
