@@ -141,15 +141,41 @@ App.initUploadFile = function(field, options) {
     remove_click()
   }
   function done(e, raw_data) {
-    console.log('upload done', raw_data)
-    
+    console.log('upload done', raw_data.dataType)
     var data = null;
-    if (raw_data.dataType == 'iframe text') {
-      data = $.parseJSON(raw_data.result);
-    } else {
-      data = $.parseJSON($(raw_data.result).text());
+    //TODO: file fields should be allowed to accept a resource path to a file
+    //ie: api-type='resource', 'value'=final redirect url
+    //or we know that we were redirected to an appropriate url and do a seperate request
+    //try {
+        if (raw_data.dataType == 'iframe text') {
+          data = $.parseJSON(raw_data.result);
+          if (data  === null) throw 'Data cannot be null'
+        } else if (raw_data.dataType == 'json') {
+            data = raw_data.result;
+        } else {
+          data = $.parseJSON($(raw_data.result).text());
+          if (data  === null) throw 'Data cannot be null'
+        }
+    /*
+    } catch (error) {
+        console.log(error)
+        //can't get the url from jqxhr, so get it from the form
+        console.log(raw_data.jqXHR)
+        var html = $(raw_data.result)
+        url = html.find('#main_link form').attr('action');
+        console.log(html)
+        console.log('Fetch:', url)
+        var settings = $.extend({}, App.requestDefaults, {
+            url: url,
+            success: function(indata) {
+                data = indata;
+            },
+            async: false,
+            dataType: "json"
+        })
+        $.ajax(settings)
     }
-    console.log(data)
+    * */
     var fileInput = $(e.target);
     var fields = data.collection.items[0]['data']
     var path = null;
@@ -205,8 +231,8 @@ App.initUploadFile = function(field, options) {
         //'uploadLimit': 1,
         'async': true,
         'type': 'POST',
-        'dataType': 'text', //since we use iframe, we force as text then parse as json later
-        'forceIframeTransport': true,
+        'dataType': 'json', //since we use iframe, we force as text then parse as json later
+        //'forceIframeTransport': true,
         'url': '/hyper-admin/-storages/media/add/',
         'paramName': 'upload',
         'accepts': {
