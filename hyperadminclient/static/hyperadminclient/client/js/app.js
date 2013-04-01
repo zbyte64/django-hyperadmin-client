@@ -26,6 +26,22 @@ App.serializeFormJSON = function(form) {
     return JSON.stringify({'data':o});
 };
 
+App.getCookie = function(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 App.contentType = 'application/vnd.Collection.hyperadmin+JSON';
 App.inlineContentType = 'text/html;inline=1';
 
@@ -40,27 +56,12 @@ App.requestDefaults = {
     dataType: "html", //we are to get html back even though we send JSON
     beforeSend: function(jqXHR, settings) { //inject csrf token
         jQuery(document).ajaxSend(function(event, xhr, settings) {
-            function getCookie(name) {
-                var cookieValue = null;
-                if (document.cookie && document.cookie != '') {
-                    var cookies = document.cookie.split(';');
-                    for (var i = 0; i < cookies.length; i++) {
-                        var cookie = jQuery.trim(cookies[i]);
-                        // Does this cookie string begin with the name we want?
-                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
-                        }
-                    }
-                }
-                return cookieValue;
-            }
             function safeMethod(method) {
                 return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
             }
             
             if (!safeMethod(settings.type) && !settings.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                xhr.setRequestHeader("X-CSRFToken", App.getCookie('csrftoken'));
             }
         });
     }
@@ -118,12 +119,14 @@ App.initUploadFile = function(field, options) {
             url: endpoint,
             success: startUpload,
             data : {'name': file.name,
+                    'csrfmiddlewaretoken': App.getCookie('csrftoken'),
                     'upload_to': upload_to},
         })
         $.ajax(settings);
     } else {
         console.log('boo')
-        data.formData = {'name':'hyperadmin-tmp/'+file.name}
+        data.formData = {'name':'hyperadmin-tmp/'+file.name,
+                         'csrfmiddlewaretoken': App.getCookie('csrftoken')}
         data.submit()
     }
   }
@@ -138,7 +141,7 @@ App.initUploadFile = function(field, options) {
     remove_click()
   }
   function done(e, raw_data) {
-    console.log('upload done', e, raw_data)
+    console.log('upload done', raw_data)
     
     var data = null;
     if (raw_data.dataType == 'iframe text') {
